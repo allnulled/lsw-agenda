@@ -1,0 +1,36 @@
+<div class="lsw_agenda">
+    <lsw-calendario :solo-fecha="true"
+        :al-cambiar-valor="loadDate" />
+    <lsw-table :initial-input="selectedDayTasks" />
+    <div class="">
+        <control-box :on-submit="$console.log"
+            validate-button="Validate"
+            submit-button="Submit"
+            form-id="user">
+            <string-control name="name"
+                label="User name:"
+                initial-value="Carl"
+                placeholder="Your name here"
+                :on-validate="v => { if(v !== 'Carl') return new Error('Name must be Carl') }"
+                form-id="user" />
+            <string-control name="age"
+                label="User age:"
+                initial-value="34"
+                placeholder="Your age here"
+                :on-validate="v => { if(parseInt(v) < 30) return new Error('Age must be over 30') }"
+                form-id="user" />
+            <string-control name="city"
+                label="User city:"
+                initial-value="Los Angeles"
+                placeholder="Your city here"
+                :on-validate="v => { if(!v.startsWith('Los')) return new Error('City must start with Los') }"
+                form-id="user" />
+            <string-control name="delay"
+                label="User delay:"
+                initial-value="Validation requires time here"
+                placeholder="Your delay here"
+                :on-validate="() => new Promise(ok => setTimeout(() => ok(0), 1000))"
+                form-id="user" />
+        </control-box>
+    </div>
+</div>

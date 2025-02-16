@@ -1,0 +1,14 @@
+{
+  "name": "lsw-agenda",
+  "version": "1.0.0",
+  "description": "Agenda UI tool for LSW",
+  "main": "lsw-agenda.js",
+  "scripts": {
+    "build": "node bundler.js",
+    "test": "echo 'no tests for lsw-agenda'",
+    "versionate": "echo 'no versionate for lsw-agenda'"
+  },
+  "keywords": [],
+  "author": "allnulled",
+  "license": "WTFPL"
+}
