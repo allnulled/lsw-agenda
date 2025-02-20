@@ -1,0 +1,15 @@
+/*
+  @artifact:  Lite Starter Web Dependency
+  @url:       https://github.com/allnulled/lsw-agenda.git
+  @name:      @allnulled/lsw-agenda
+  @version:   1.0.0
+*/.lsw_agenda {
+    
+}
+.calendar_viewer {
+    padding: 8px;
+}
+.no_tasks_message {
+    padding: 8px;
+}
+

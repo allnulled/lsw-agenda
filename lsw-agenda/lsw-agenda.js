@@ -5,25 +5,25 @@ Vue.component("LswAgenda", {
   data() {
     this.$trace("lsw-agenda.data");
     return {
-      selectedDayTasks: [{
-        name: 'Carl',
-        age: 33,
-        city: "OK...1",
-      }, {
-        name: 'C18',
-        age: 34,
-        city: "OK...2",
-      }, {
-        name: 'Carlson',
-        age: 35,
-        city: "OK...3",
-      }]
+      selectedDate: undefined,
+      selectedDateTasks: undefined,
     };
   },
   methods: {
-    loadDate(value, calendarioComponent) {
-      console.log("agenda: " + value);
-      console.log(this.$lsw.database);
+    async loadDateTasks(newDate) {
+      this.$trace("lsw-agenda.methods.loadDateTasks");
+      this.selectedDate = newDate;
+      const selectedDate = this.selectedDate;
+      const selectedDateTasks = await this.$lsw.database.select("procedimiento", value => {
+        const isSameYear = value.anio === selectedDate.getFullYear();
+        const isSameMonth = value.mes === selectedDate.getMonth();
+        const isSameDay = value.dia === selectedDate.getDate();
+        console.log(isSameYear);
+        console.log(isSameMonth);
+        console.log(isSameDay);
+        return isSameYear && isSameMonth && isSameDay;
+      });
+      this.selectedDateTasks = selectedDateTasks;
     }
   },
   watch: {
@@ -32,6 +32,8 @@ Vue.component("LswAgenda", {
   async mounted() {
     try {
       this.$trace("lsw-agenda.mounted");
+      const selectedDate = this.$refs.calendario.getValue();
+      this.loadDateTasks(selectedDate);
     } catch (error) {
       console.log(error);
     }
