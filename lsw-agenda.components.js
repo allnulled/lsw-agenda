@@ -152,17 +152,61 @@ Vue.component("LswAgenda", {
       this.$trace("lsw-agenda.methods.goToToday");
       // @TODO: 
     },
-    openInsertTaskDialog() {
+    async openInsertTaskDialog() {
       this.$trace("lsw-agenda.methods.openInsertTaskDialog");
       // @TODO: 
     },
-    openUpdateTaskDialog() {
+    async openUpdateTaskDialog(tarea) {
       this.$trace("lsw-agenda.methods.openUpdateTaskDialog");
       // @TODO: 
+      const data = await this.$dialogs.open({
+        id: "agenda-viewer-update-task-" + this.$lsw.utils.getRandomString(5),
+        title: "Update task details",
+        template: `
+          <div>
+            <lsw-agenda-task-form :task="task" />
+          </div>
+        `,
+        factory: {
+          data: {
+            task: tarea
+          },
+          methods: {}
+        },
+        acceptButton: {
+          text: "Update task",
+        },
+        cancelButton: {
+          text: "Cancel",
+        }
+      });
+      console.log(data);
     },
-    openDeleteTaskDialog() {
+    async openDeleteTaskDialog() {
       this.$trace("lsw-agenda.methods.openDeleteTaskDialog");
       // @TODO: 
+      const data = await this.$dialogs.open({
+        id: "agenda-viewer-delete-task-" + this.$lsw.utils.getRandomString(5),
+        title: "Delete task confirmation",
+        template: `
+          <div>
+            <p>Are you sure you want to cancel task deletion?</p>
+          </div>
+        `,
+        acceptButton: {
+          text: "OK",
+          callback: (id) => {
+            this.$dialogs.accept(id);
+          },
+        },
+        cancelButton: {
+          text: "Cancel",
+          callback: (id) => {
+            this.$dialogs.cancel(id);
+          },
+        }
+      });
+      console.log(data);
     },
   },
   watch: {
@@ -172,6 +216,38 @@ Vue.component("LswAgenda", {
       this.$trace("lsw-agenda.mounted");
       const selectedDate = this.$refs.calendario.getValue();
       this.loadDateTasks(selectedDate);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+});
+let trackerCounter = 0;
+
+Vue.component("LswAgendaTaskForm", {
+  name: "LswAgendaTaskForm",
+  template: `<div class="lsw_agenda_task_form">
+    Taskform.
+</div>`,
+  props: {
+    task: {
+      type: Object,
+      default: () => undefined
+    }
+  },
+  data() {
+    this.$trace("lsw-agenda-task-form.data");
+    return {
+      
+    };
+  },
+  methods: {
+    
+  },
+  watch: {},
+  async mounted() {
+    try {
+      this.$trace("lsw-agenda-task-form.mounted");
+      
     } catch (error) {
       console.log(error);
     }
