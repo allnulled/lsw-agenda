@@ -8,6 +8,7 @@ Vue.component("LswAgenda", {
     this.$trace("lsw-agenda.data");
     return {
       counter: 0,
+      isLoading: false,
       selectedDate: undefined,
       selectedDateTasks: undefined,
       selectedDateTasksFormattedPerHour: undefined,
@@ -25,16 +26,34 @@ Vue.component("LswAgenda", {
     },
     async loadDateTasks(newDate) {
       this.$trace("lsw-agenda.methods.loadDateTasks");
-      this.selectedDate = newDate;
-      const selectedDate = this.selectedDate;
-      const selectedDateTasks = await this.$lsw.database.select("procedimiento", value => {
-        const isSameYear = value.anio === selectedDate.getFullYear();
-        const isSameMonth = value.mes === selectedDate.getMonth();
-        const isSameDay = value.dia === selectedDate.getDate();
-        return isSameYear && isSameMonth && isSameDay;
-      });
-      this.selectedDateTasks = selectedDateTasks;
-      this.propagateDateTasks();
+      this.isLoading = true;
+      console.log("Loading date tasks of: " + newDate);
+      try {
+        this.selectedDate = newDate;
+        const selectedDate = this.selectedDate;
+        const selectedDateTasks = await this.$lsw.database.selectMany("procedimiento", value => {
+          const isSameYear = value.anio === selectedDate.getFullYear();
+          const isSameMonth = value.mes === (selectedDate.getMonth()+1);
+          const isSameDay = value.dia === selectedDate.getDate();
+          const isAccepted = isSameYear && isSameMonth && isSameDay;
+          console.log("isSameYear", isSameYear);
+          console.log("isSameMonth", isSameMonth);
+          console.log("isSameDay", isSameDay);
+          console.log("isAccepted", isAccepted);
+          console.log(isAccepted);
+          return isAccepted;
+        });
+        console.log("selectedDate");
+        console.log(selectedDate);
+        console.log("selectedDateTasks");
+        console.log(selectedDateTasks);
+        this.selectedDateTasks = selectedDateTasks;
+        this.propagateDateTasks();
+      } catch (error) {
+        console.log("Error loading date taskes:", error);
+      } finally {
+        setTimeout(() => this.isLoading = false, 100);
+      }
     },
     groupTasksByHour(tareas = this.selectedDateTasks) {
       this.$trace("lsw-agenda.methods.groupTasksByHour");
@@ -72,12 +91,22 @@ Vue.component("LswAgenda", {
       this.$trace("lsw-agenda.methods.propagateDateTasks");
       this.selectedDateTasksFormattedPerHour = this.groupTasksByHour();
     },
-    saluda(i) {
-      console.log(i);
+    goToToday() {
+      this.$trace("lsw-agenda.methods.goToToday");
+      // @TODO: 
     },
-    increaseCounter() {
-      return trackerCounter++;
-    }
+    openInsertTaskDialog() {
+      this.$trace("lsw-agenda.methods.openInsertTaskDialog");
+      // @TODO: 
+    },
+    openUpdateTaskDialog() {
+      this.$trace("lsw-agenda.methods.openUpdateTaskDialog");
+      // @TODO: 
+    },
+    openDeleteTaskDialog() {
+      this.$trace("lsw-agenda.methods.openDeleteTaskDialog");
+      // @TODO: 
+    },
   },
   watch: {
   },

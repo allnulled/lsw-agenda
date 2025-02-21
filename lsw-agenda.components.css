@@ -33,6 +33,10 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    min-height: 25px;
+    height: 25px;
+}
+.hour_task_pill * {
     background-color: white;
 }
 .hour_task_dragger {
@@ -52,6 +56,19 @@
 .hour_compromises {
     font-size: 10px;
 }
+.hour_table {
+    border-left: 1px solid #114;
+    border-right: 1px solid #114;
+    border-bottom: 1px solid #114;
+}
+
+.pill_start,
+.pill_middle,
+.pill_end {
+    display: inline-block;
+    height: 25px;
+    padding: 5px;
+}
 .pill_start {
     flex: 1;
     display: inline-block;
@@ -59,9 +76,9 @@
     border-radius: 2pt;
     border-top-right-radius: 0pt;
     border-bottom-right-radius: 0pt;
-    padding: 2px;
     font-weight: bold;
     white-space: nowrap;
+    padding-top:2px;
 }
 .pill_middle,
 .pill_end {
@@ -69,7 +86,6 @@
     display: inline-block;
     border: 1px solid black;
     border-left: none;
-    padding: 3px;
     font-size: 10px;
     white-space: nowrap;
 }
@@ -84,7 +100,6 @@
     border-bottom-left-radius: 0pt;
     font-size: 10px;
     white-space: nowrap;
-    padding: 3px;
 }
 
 .hour_task_block.is_completed .hour_task_name {
@@ -96,3 +111,11 @@
 .hour_task_block.is_failed .hour_task_name {
     background-color: #a83b14;
 }
+.hour_task_editer {}
+.hour_task_deleter {}
+
+.hour_task_editer,
+.hour_task_deleter {
+    cursor: pointer;
+}
+
