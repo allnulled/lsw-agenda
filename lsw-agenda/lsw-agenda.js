@@ -104,23 +104,16 @@ Vue.component("LswAgenda", {
       // @TODO: 
       const data = await this.$dialogs.open({
         id: "agenda-viewer-update-task-" + this.$lsw.utils.getRandomString(5),
-        title: "Update task details",
+        title: "Update task information",
         template: `
           <div>
-            <lsw-agenda-task-form :task="task" />
+            <lsw-agenda-task-form :task="task" ref="taskForm" />
           </div>
         `,
         factory: {
           data: {
             task: tarea
           },
-          methods: {}
-        },
-        acceptButton: {
-          text: "Update task",
-        },
-        cancelButton: {
-          text: "Cancel",
         }
       });
       console.log(data);

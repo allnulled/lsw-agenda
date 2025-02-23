@@ -1,1 +1,5 @@
 .lsw_agenda_task_form {}
+.lsw_agenda_task_form .ControlBoxButtons {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}

@@ -166,23 +166,16 @@ Vue.component("LswAgenda", {
       // @TODO: 
       const data = await this.$dialogs.open({
         id: "agenda-viewer-update-task-" + this.$lsw.utils.getRandomString(5),
-        title: "Update task details",
+        title: "Update task information",
         template: `
           <div>
-            <lsw-agenda-task-form :task="task" />
+            <lsw-agenda-task-form :task="task" ref="taskForm" />
           </div>
         `,
         factory: {
           data: {
             task: tarea
           },
-          methods: {}
-        },
-        acceptButton: {
-          text: "Update task",
-        },
-        cancelButton: {
-          text: "Cancel",
         }
       });
       console.log(data);
@@ -230,8 +223,41 @@ let trackerCounter = 0;
 
 Vue.component("LswAgendaTaskForm", {
   name: "LswAgendaTaskForm",
-  template: `<div class="lsw_agenda_task_form">
-    Taskform.
+  template: `<div class="lsw_agenda_task_form" style="padding: 4px;">
+    <control-box ref="agenda_task_form_control_box" form-id="agenda_task_form_for_update" :on-submit="$window.console.log"
+        validate-button="Validar" submit-button="Añadir">
+        <string-control label="Concepto:" form-id="agenda_task_form_for_update" :on-validate="v => { if( v.trim() === '' ) { throw new Error('Concepto no puede estar vacío') } }" placeholder="Identificador único de concepto" :initial-value="''" />
+        <string-control label="Duración:" form-id="agenda_task_form_for_update" :on-validate="v => $lsw.timer.utils.isDurationOrThrow(v)" placeholder="0y 0mon 0d 0h 0min 0s" />
+        <string-control label="Día:" form-id="agenda_task_form_for_update" :on-validate="v => $lsw.timer.utils.isDateOrThrow(v)" placeholder="2025/01/01" />
+        <string-control label="Hora:" form-id="agenda_task_form_for_update" :on-validate="v => $lsw.timer.utils.isHourOrThrow(v)" placeholder="00:00" />
+        <string-control label="Detalles:" form-id="agenda_task_form_for_update" placeholder="Especificaciones extra si las requieres." :multiline="true" />
+        <div class="flex_row centered" style="padding-bottom: 4px;">
+            <div class="flex_1" style="padding-right: 4px;">Sección: </div>
+            <select class="flex_100 width_100" v-model="selectedSubsection">
+                <option value="Propios">Propios</option>
+                <option value="Agregados">Agregados</option>
+            </select>
+        </div>
+        <div v-if="selectedSubsection === 'Propios'">
+            <div v-descriptor="'agenda.task_form.title'">Propios</div>
+            <div v-descriptor="'agenda.task_form.block'">
+                <string-control label="Actitudes:" form-id="agenda_task_form_for_update" placeholder="Actitud1, actitud2, actitud3" />
+            </div>
+        </div>
+        <div v-if="selectedSubsection === 'Agregados'">
+            <div v-descriptor="'agenda.task_form.title'">Agregados</div>
+            <div v-descriptor="'agenda.task_form.block'">
+                <button v-on:click="addAggregation">Add</button>
+                <div v-for="aggregation, aggregationIndex in aggregations" v-bind:key="'aggregated_' + aggregationIndex">
+                    <div v-descriptor="'agenda.task_form.aggregations.block'">
+                        <string-control label="Clave:" :initial-value="aggregation.key" />
+                        <string-control label="Valor:" :initial-value="aggregation.value" :multiline="true" />
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </control-box>
 </div>`,
   props: {
     task: {
@@ -242,11 +268,24 @@ Vue.component("LswAgendaTaskForm", {
   data() {
     this.$trace("lsw-agenda-task-form.data");
     return {
-      
+      selectedSubsection: "Propios",
+      aggregations: []
     };
   },
   methods: {
-    
+    getFormControl() {
+      return this.$refs.agenda_task_form_control_box[0];
+    },
+    getValue() {
+      return this.getFormControl().getValue();
+    },
+    addAggregation() {
+      this.aggregations.push({
+        key: "",
+        value: "",
+        type: "text"
+      });
+    }
   },
   watch: {},
   async mounted() {
