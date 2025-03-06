@@ -3,6 +3,8 @@
 }
 .calendar_viewer {
     padding: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 .no_tasks_message {
     padding: 8px;
@@ -119,8 +121,216 @@
     cursor: pointer;
 }
 
-.lsw_agenda_task_form {}
-.lsw_agenda_task_form .ControlBoxButtons {
+.hidden_menu {
+    position: relative;
+}
+.hidden_menu_box {
+    position: absolute;
+    top: 0;
+    bottom: auto;
+    left: 0;
+    right: auto;
+    padding: 4px;
+    padding-top: 4px;
+    padding-left: 0px;
+    z-index: 1001;
+}
+.hidden_menu_items {
+    background-color: rgba(255,255,255,0.7);
+    border: 1px solid #999;
+    border-radius: 2pt;
+    box-shadow: 0 0 4px black;
+}
+
+.hidden_menu_items > div {
+    white-space: nowrap;
+    padding: 0px;
+    border-top: 1px solid #999;
+}
+.hidden_menu_items > div:first-child {
+    border-top: 0px solid white;
+}
+.hidden_menu_items > div > button {
+    width: 100%;
+    padding: 2px;
+}
+.hidden_menu_fixed_layer {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1000;
+    background-color: rgba(0,0,0,0.3);
+}
+
+
+.form_label {
+    padding-top: 4px;
+}
+input.form_control {
+    width: 100%;
+}
+
+
+.form_label {
+    
+}
+.form_label .enunciate_box {
+    display: inline-block;
+}
+.form_label .info_icon {
+    display: inline-block;
+    cursor: pointer;
+}
+.form_label .explanation {
+    display: inline;
+    color: #777;
+    font-size: 10px;
+}
+
+.form_title {
+    background-color: #555;
+    color: white;
+    padding: 8px;
+    border: 1px solid black;
+    font-weight: bold;
+}
+
+
+.LswAgendaAccionAdd {
+
+}
+
+.LswAgendaAccionSearch {
+
+}
+.lsw_agenda_breadcrumb {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.agenda_breadcrumb {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    border: 1px solid #999;
+    border-radius: 2pt;
+    padding: 4px;
+    background-color: rgba(193, 193, 193, 0.51);
+}
+.agenda_breadcrumb_item {
+    flex: 1;
+    padding: 4px;
+}
+.agenda_breadcrumb_link {
+    color: black;
+    font-weight: normal;
+    cursor: pointer;
+}
+.agenda_breadcrumb_link:hover {
+    text-decoration: underline;
+}
+.agenda_breadcrumb_link.only_label {
+    font-weight: normal;
+    text-decoration: none;
+    cursor: inherit;
+}
+.LswAgendaConceptoAdd {
+
+}
+.LswAgendaConceptoSearch {
+
+}
+.LswAgendaEventoSearch {
+
+}
+.form_item {
     padding-top: 4px;
     padding-bottom: 4px;
+    border-top: 1px solid #CCC;
+}
+select.form_control {
+    width: 100%;
+}
+.enunciate_box2 {
+    padding-bottom: 2px;
+}
+.enunciate {
+    font-weight: bold;
+    display: block;
+}
+.enunciate > .enunciate_text {
+    display: inline;
+    white-space: nowrap;
+}
+.enunciate_box {
+    padding-left: 4px;
+    float: right;
+}
+.enunciate > .coderef {
+    display: inline;
+    padding-bottom: 2px;
+}
+.enunciate > .coderef > .codenote {
+    display: inline;
+    font-weight: normal;
+    font-size: 9px;
+    white-space: nowrap;
+    padding-right: 2px;
+}
+.enunciate > .coderef > .codenote.as_note {
+    padding-left: 2px;
+}
+.enunciate > .coderef > .codetext {
+    display: inline;
+    font-weight: normal;
+    font-family: monospace;
+    font-size: 8px;
+    white-space: nowrap;
+}
+.enunciate > .coderef > .codetype {
+    font-size: 10px;
+    background-color: #CCC;
+    box-shadow: 0 0 2px black;
+    padding: 0px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+.validationBox {
+    display: none;
+    padding: 4px;
+    border: 1px solid #999;
+    margin-top: 1px;
+}
+.validationBox.errorBox {
+    display: block;
+    background-color: rgb(207, 100, 100);
+}
+.validationBox.successBox {
+    display: block;
+    background-color: rgb(127, 223, 127);
+}
+.LswAgendaImpresionAdd {
+
+}
+.LswAgendaImpresionSearch {
+
+}
+.LswAgendaInfraccionSearch {
+
+}
+.LswAgendaLimitadorAdd {
+
+}
+.LswAgendaLimitadorSearch {
+
+}
+.LswAgendaPostimpresionSearch {
+
+}
+.LswAgendaPropagacionSearch {
+
+}
+.LswAgendaPropagadorSearch {
+
 }

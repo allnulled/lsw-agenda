@@ -1,5 +1,3 @@
-let trackerCounter = 0;
-
 Vue.component("LswAgenda", {
   name: "LswAgenda",
   template: $template,
@@ -9,6 +7,8 @@ Vue.component("LswAgenda", {
     return {
       counter: 0,
       isLoading: false,
+      selectedContext: "agenda",
+      selectedSubmenu1: 'none',
       selectedDate: undefined,
       selectedDateTasks: undefined,
       selectedDateTasksFormattedPerHour: undefined,
@@ -16,6 +16,14 @@ Vue.component("LswAgenda", {
     };
   },
   methods: {
+    selectContext(id, parameters = {}) {
+      this.selectedSubmenu1 = "none";
+      this.selectedContextParameters = parameters;
+      this.selectedContext = id;
+    },
+    selectSubmenu1(id) {
+      this.selectedSubmenu1 = id;
+    },
     toggleHour(hourInt) {
       const pos = this.hiddenDateHours.indexOf(hourInt);
       if(pos === -1) {
@@ -31,7 +39,9 @@ Vue.component("LswAgenda", {
       try {
         this.selectedDate = newDate;
         const selectedDate = this.selectedDate;
-        const selectedDateTasks = await this.$lsw.database.selectMany("procedimiento", value => {
+        const selectedDateTasks = await this.$lsw.database.selectMany("accion", valueBrute => {
+          const valueList = Timeformat_parser.parse(valueBrute.starts_at);
+          const value = valueList[0];
           const isSameYear = value.anio === selectedDate.getFullYear();
           const isSameMonth = value.mes === (selectedDate.getMonth()+1);
           const isSameDay = value.dia === selectedDate.getDate();
@@ -91,10 +101,6 @@ Vue.component("LswAgenda", {
       this.$trace("lsw-agenda.methods.propagateDateTasks");
       this.selectedDateTasksFormattedPerHour = this.groupTasksByHour();
     },
-    goToToday() {
-      this.$trace("lsw-agenda.methods.goToToday");
-      // @TODO: 
-    },
     async openInsertTaskDialog() {
       this.$trace("lsw-agenda.methods.openInsertTaskDialog");
       // @TODO: 
@@ -102,21 +108,7 @@ Vue.component("LswAgenda", {
     async openUpdateTaskDialog(tarea) {
       this.$trace("lsw-agenda.methods.openUpdateTaskDialog");
       // @TODO: 
-      const data = await this.$dialogs.open({
-        id: "agenda-viewer-update-task-" + this.$lsw.utils.getRandomString(5),
-        title: "Update task information",
-        template: `
-          <div>
-            <lsw-agenda-task-form :task="task" ref="taskForm" />
-          </div>
-        `,
-        factory: {
-          data: {
-            task: tarea
-          },
-        }
-      });
-      console.log(data);
+      
     },
     async openDeleteTaskDialog() {
       this.$trace("lsw-agenda.methods.openDeleteTaskDialog");

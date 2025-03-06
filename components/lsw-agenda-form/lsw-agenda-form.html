@@ -1,0 +1,62 @@
+<div>
+    <div class="form_structure"
+        v-form.form="formMetadata.form"
+        ref="agenda_form">
+        <div class="form_item text_align_right">
+            <button v-on:click="() => $refs.agenda_form.$lswFormMetadata.methods.submit()">Submit</button>
+        </div>
+        <div class="form_item"
+            v-for="field, fieldIndex in formMetadata.fields"
+            v-bind:key="'form_field_' + fieldIndex">
+            <div class="form_label">
+                <div class="enunciate_box2">
+                    <div class="enunciate">
+                        <span class="enunciate_text">{{ fieldIndex + 1 }}. {{ field.enunciate }}</span>
+                        <span class="coderef">
+                            <span class="codenote as_note">como</span>
+                            <span class="codetext codetype">{{ field.code3 }}</span>
+                            <span class="codenote as_note">en</span>
+                            <span class="codetext codetype">{{ field.code1 }}</span>
+                        </span>
+                        <span class="explanation_block">
+                            <span class="iconref"
+                                style="flex:100;">
+                                <span class="info_icon"
+                                    v-on:click="() => toggleExplanation(field.code2)">ℹ️</span>
+                            </span>
+                            <span class="explanation"
+                                v-if="expandedExplanations.indexOf(field.code2) !== -1">{{ field.explanation }}</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <template v-if="field.type === 'input'">
+                <input class="form_control"
+                    type="text"
+                    :placeholder="field.placeholder"
+                    v-form.input="field.inputConfig" />
+                <div class="validationBox"
+                    v-form.error="field.errorConfig"></div>
+            </template>
+            <template v-else-if="field.type === 'textarea'">
+                <textarea class="form_control"
+                    :placeholder="field.placeholder"
+                    v-form.input="field.inputConfig" />
+                <div class="validationBox"
+                    v-form.error="field.errorConfig"></div>
+            </template>
+            <template v-else-if="field.type === 'select'">
+                <select class="form_control" v-form.input="field.inputConfig">
+                    <option :value="option.value" v-for="option, optionIndex in field.options" v-bind:key="'field_' + fieldIndex + '_selector_option_' + optionIndex">
+                        {{ option.text }}
+                    </option>
+                </select>
+                <div class="validationBox"
+                    v-form.error="field.errorConfig"></div>
+            </template>
+        </div>
+        <div class="form_item text_align_right">
+            <button v-on:click="() => $refs.agenda_form.$lswFormMetadata.methods.submit()">Submit</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="lsw_agenda_breadcrumb">
+    <div class="flex_row centered">
+        <div class="right_padded_1">
+            <button v-on:click="() => goToSection('agenda')">📆</button>
+        </div>
+        <div class="agenda_breadcrumb flex_100">
+            <div class="agenda_bradcrumb_item"
+                v-for="pathItem, pathIndex in pathItems"
+                v-bind:key="'agenda-breadcrumb-path-item-' + pathIndex">
+                <span v-if="pathIndex !== 0"> » </span>
+                <span class="agenda_breadcrumb_link"
+                    v-if="pathItem.link">
+                    <a :href="pathItem.link">{{ pathItem.label }}</a>
+                </span>
+                <span class="agenda_breadcrumb_link"
+                    v-else-if="pathItem.section">
+                    <span v-on:click="() => goToSection(pathItem.section)">{{ pathItem.label }}</span>
+                </span>
+                <span class="agenda_breadcrumb_link"
+                    v-else-if="pathItem.event">
+                    <span v-on:click="pathItem.event">{{ pathItem.label }}</span>
+                </span>
+                <span class="agenda_breadcrumb_link only_label"
+                    v-else-if="pathItem.label">
+                    <span>{{ pathItem.label }}</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

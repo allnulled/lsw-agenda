@@ -1,0 +1,66 @@
+.form_item {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    border-top: 1px solid #CCC;
+}
+select.form_control {
+    width: 100%;
+}
+.enunciate_box2 {
+    padding-bottom: 2px;
+}
+.enunciate {
+    font-weight: bold;
+    display: block;
+}
+.enunciate > .enunciate_text {
+    display: inline;
+    white-space: nowrap;
+}
+.enunciate_box {
+    padding-left: 4px;
+    float: right;
+}
+.enunciate > .coderef {
+    display: inline;
+    padding-bottom: 2px;
+}
+.enunciate > .coderef > .codenote {
+    display: inline;
+    font-weight: normal;
+    font-size: 9px;
+    white-space: nowrap;
+    padding-right: 2px;
+}
+.enunciate > .coderef > .codenote.as_note {
+    padding-left: 2px;
+}
+.enunciate > .coderef > .codetext {
+    display: inline;
+    font-weight: normal;
+    font-family: monospace;
+    font-size: 8px;
+    white-space: nowrap;
+}
+.enunciate > .coderef > .codetype {
+    font-size: 10px;
+    background-color: #CCC;
+    box-shadow: 0 0 2px black;
+    padding: 0px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+.validationBox {
+    display: none;
+    padding: 4px;
+    border: 1px solid #999;
+    margin-top: 1px;
+}
+.validationBox.errorBox {
+    display: block;
+    background-color: rgb(207, 100, 100);
+}
+.validationBox.successBox {
+    display: block;
+    background-color: rgb(127, 223, 127);
+}

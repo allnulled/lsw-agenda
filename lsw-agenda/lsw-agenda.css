@@ -3,6 +3,8 @@
 }
 .calendar_viewer {
     padding: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 }
 .no_tasks_message {
     padding: 8px;
@@ -118,3 +120,80 @@
 .hour_task_deleter {
     cursor: pointer;
 }
+
+.hidden_menu {
+    position: relative;
+}
+.hidden_menu_box {
+    position: absolute;
+    top: 0;
+    bottom: auto;
+    left: 0;
+    right: auto;
+    padding: 4px;
+    padding-top: 4px;
+    padding-left: 0px;
+    z-index: 1001;
+}
+.hidden_menu_items {
+    background-color: rgba(255,255,255,0.7);
+    border: 1px solid #999;
+    border-radius: 2pt;
+    box-shadow: 0 0 4px black;
+}
+
+.hidden_menu_items > div {
+    white-space: nowrap;
+    padding: 0px;
+    border-top: 1px solid #999;
+}
+.hidden_menu_items > div:first-child {
+    border-top: 0px solid white;
+}
+.hidden_menu_items > div > button {
+    width: 100%;
+    padding: 2px;
+}
+.hidden_menu_fixed_layer {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 1000;
+    background-color: rgba(0,0,0,0.3);
+}
+
+
+.form_label {
+    padding-top: 4px;
+}
+input.form_control {
+    width: 100%;
+}
+
+
+.form_label {
+    
+}
+.form_label .enunciate_box {
+    display: inline-block;
+}
+.form_label .info_icon {
+    display: inline-block;
+    cursor: pointer;
+}
+.form_label .explanation {
+    display: inline;
+    color: #777;
+    font-size: 10px;
+}
+
+.form_title {
+    background-color: #555;
+    color: white;
+    padding: 8px;
+    border: 1px solid black;
+    font-weight: bold;
+}
+
