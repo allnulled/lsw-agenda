@@ -458,7 +458,7 @@ Vue.component("LswAgenda", {
           out[day].push(item);
           return out;
         }, {});
-        calendario.establecer_marcadores_del_mes(tasksOfMonthByDay);
+        // calendario.establecer_marcadores_del_mes(tasksOfMonthByDay);
       }
     },
     groupTasksByHour(tareas = this.selectedDateTasks) {
