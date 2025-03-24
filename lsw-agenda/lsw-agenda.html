@@ -4,24 +4,36 @@
         style="gap: 4px;">
         <div class="flex_1">
             <button class="width_100 nowrap"
-                v-on:click="() => selectSubmenu1('add')">+</button>
+                v-on:click="() => selectSubmenu1('add')"
+                :class="{activated: selectedSubmenu1 === 'add'}">+</button>
             <div class="hidden_menu"
                 v-if="selectedSubmenu1 === 'add'">
                 <div class="hidden_menu_fixed_layer"
                     v-on:click="() => selectSubmenu1('none')"></div>
-                <div class="hidden_menu_box ">
+                <div class="hidden_menu_box"
+                    style="min-width: 160px;">
                     <div class="hidden_menu_items">
-                        <div>
-                            <button v-on:click="() => selectContext('accion.add', { initialValues: { starts_at: selectedDate } })">Nueva acción</button>
+                        <div class="title">
+                            <div class="flex_100"
+                                style="padding-left: 4px;">
+                                Insertar info
+                            </div>
+                            <div class="flex_1">
+                                <button v-on:click="() => selectSubmenu1('none')">❌</button>
+                            </div>
                         </div>
-                        <div>
-                            <button v-on:click="() => selectContext('concepto.add')">Nuevo concepto</button>
+                        <div class="button_cell">
+                            <button v-on:click="() => selectContext('accion.add', { initialValues: { tiene_inicio: selectedDate } })">Crear
+                                acción</button>
                         </div>
-                        <div>
-                            <button v-on:click="() => selectContext('limitador.add')">Nuevo limitador</button>
+                        <div class="button_cell">
+                            <button v-on:click="() => selectContext('concepto.add')">Crear concepto</button>
                         </div>
-                        <div>
-                            <button v-on:click="() => selectContext('impresion.add')">Nueva impresión</button>
+                        <div class="button_cell">
+                            <button v-on:click="() => selectContext('limitador.add')">Crear limitador</button>
+                        </div>
+                        <div class="button_cell">
+                            <button v-on:click="() => selectContext('impresion.add')">Crear impresión</button>
                         </div>
                     </div>
                 </div>
@@ -29,39 +41,58 @@
         </div>
         <div class="flex_1">
             <button class="width_100 nowrap"
-                v-on:click="() => selectSubmenu1('search')">🔎</button>
+                v-on:click="() => selectSubmenu1('search')"
+                :class="{activated: selectedSubmenu1 === 'search'}">🔎</button>
             <div class="hidden_menu"
                 v-if="selectedSubmenu1 === 'search'">
                 <div class="hidden_menu_fixed_layer"
                     v-on:click="() => selectSubmenu1('none')"></div>
-                <div class="hidden_menu_box ">
+                <div class="hidden_menu_box">
                     <div class="hidden_menu_items">
-                        <div>
-                            <button v-on:click="() => selectContext('accion.search')">Buscar acción</button>
+                        <div class="title">
+                            <div class="flex_100"
+                                style="padding-left: 4px;">
+                                Buscar info
+                            </div>
+                            <div class="flex_1">
+                                <button v-on:click="() => selectSubmenu1('none')">❌</button>
+                            </div>
                         </div>
-                        <div>
-                            <button v-on:click="() => selectContext('concepto.search')">Buscar concepto</button>
+                        <div class="separator">
+                            <div class="flex_100"
+                                style="padding-left: 4px;">Tablas físicas:</div>
                         </div>
-                        <div>
-                            <button v-on:click="() => selectContext('propagador.search')">Buscar propagador</button>
+                        <div class="button_cell">
+                            <button v-on:click="() => selectContext('accion.search')">Buscar por acción</button>
                         </div>
-                        <div>
-                            <button v-on:click="() => selectContext('limitador.search')">Buscar límite</button>
+                        <div class="button_cell">
+                            <button v-on:click="() => selectContext('concepto.search')">Buscar por concepto</button>
                         </div>
-                        <div>
-                            <button v-on:click="() => selectContext('impresion.search')">Buscar impresión</button>
+                        <div class="button_cell">
+                            <button v-on:click="() => selectContext('propagador.search')">Buscar por propagador</button>
                         </div>
-                        <div>
-                            <button v-on:click="() => selectContext('propagacion.search')">Buscar propagación</button>
+                        <div class="button_cell">
+                            <button v-on:click="() => selectContext('limitador.search')">Buscar por límite</button>
                         </div>
-                        <div>
-                            <button v-on:click="() => selectContext('infraccion.search')">Buscar infracción</button>
+                        <div class="button_cell">
+                            <button v-on:click="() => selectContext('impresion.search')">Buscar por impresión</button>
                         </div>
-                        <div>
-                            <button v-on:click="() => selectContext('postimpresion.search')">Buscar postimpresión</button>
+                        <div class="separator">
+                            <div class="flex_100"
+                                style="padding-left: 4px;">Tablas virtuales:</div>
                         </div>
-                        <div>
-                            <button v-on:click="() => selectContext('evento.search')">Buscar evento</button>
+                        <div class="button_cell">
+                            <button v-on:click="() => selectContext('propagacion.search')">Buscar por propagación</button>
+                        </div>
+                        <div class="button_cell"
+                            style="padding-top: 2px;">
+                            <button v-on:click="() => selectContext('infraccion.search')">Buscar por infracción</button>
+                        </div>
+                        <div class="button_cell">
+                            <button v-on:click="() => selectContext('postimpresion.search')">Buscar por postimpresión</button>
+                        </div>
+                        <div class="button_cell">
+                            <button v-on:click="() => selectContext('evento.search')">Buscar por evento</button>
                         </div>
                     </div>
                 </div>
@@ -81,151 +112,239 @@
     <div class="calendar_main_panel">
         <div v-if="selectedContext === 'accion.add'">
             <div class="breadcrumb_box">
-                <lsw-agenda-breadcrumb :agenda="this" :path-items="[{label:'Añadir acción'}]" />
+                <lsw-agenda-breadcrumb :agenda="this"
+                    :path-items="[{label:'Añadir acción'}]" />
             </div>
             <lsw-agenda-accion-add :initial-data="selectedContextParameters.values" />
         </div>
         <div v-else-if="selectedContext === 'accion.search'">
             <div class="breadcrumb_box">
-                <lsw-agenda-breadcrumb :agenda="this" :path-items="[{label:'Buscar acción'}]" />
+                <lsw-agenda-breadcrumb :agenda="this"
+                    :path-items="[{label:'Buscar acción'}]" />
             </div>
             <lsw-agenda-accion-search />
         </div>
         <div v-else-if="selectedContext === 'concepto.add'">
             <div class="breadcrumb_box">
-                <lsw-agenda-breadcrumb
-                    :agenda="this" 
+                <lsw-agenda-breadcrumb :agenda="this"
                     :path-items="[{label:'Añadir concepto'}]" />
             </div>
             <lsw-agenda-concepto-add />
         </div>
         <div v-else-if="selectedContext === 'concepto.search'">
             <div class="breadcrumb_box">
-                <lsw-agenda-breadcrumb
-                    :agenda="this" 
+                <lsw-agenda-breadcrumb :agenda="this"
                     :path-items="[{label:'Buscar concepto'}]" />
             </div>
             <lsw-agenda-concepto-search />
         </div>
         <div v-else-if="selectedContext === 'limitador.add'">
             <div class="breadcrumb_box">
-                <lsw-agenda-breadcrumb
-                    :agenda="this" :path-items="[{label:'Añadir límite'}]" />
+                <lsw-agenda-breadcrumb :agenda="this"
+                    :path-items="[{label:'Añadir límite'}]" />
             </div>
             <lsw-agenda-limitador-add />
         </div>
         <div v-else-if="selectedContext === 'limitador.search'">
             <div class="breadcrumb_box">
-                <lsw-agenda-breadcrumb
-                    :agenda="this" :path-items="[{label:'Buscar límite'}]" />
+                <lsw-agenda-breadcrumb :agenda="this"
+                    :path-items="[{label:'Buscar límite'}]" />
             </div>
             <lsw-agenda-limitador-search />
         </div>
         <div v-else-if="selectedContext === 'impresion.add'">
             <div class="breadcrumb_box">
-                <lsw-agenda-breadcrumb
-                    :agenda="this" 
+                <lsw-agenda-breadcrumb :agenda="this"
                     :path-items="[{label:'Añadir impresión'}]" />
             </div>
             <lsw-agenda-impresion-add />
         </div>
         <div v-else-if="selectedContext === 'impresion.search'">
             <div class="breadcrumb_box">
-                <lsw-agenda-breadcrumb
-                    :agenda="this" 
+                <lsw-agenda-breadcrumb :agenda="this"
                     :path-items="[{label:'Buscar impresión'}]" />
             </div>
             <lsw-agenda-impresion-search />
         </div>
         <div v-else-if="selectedContext === 'propagacion.search'">
             <div class="breadcrumb_box">
-                <lsw-agenda-breadcrumb
-                    :agenda="this" 
+                <lsw-agenda-breadcrumb :agenda="this"
                     :path-items="[{label:'Buscar propagación'}]" />
             </div>
             <lsw-agenda-propagacion-search />
         </div>
         <div v-else-if="selectedContext === 'postimpresion.search'">
             <div class="breadcrumb_box">
-                <lsw-agenda-breadcrumb
-                    :agenda="this" 
+                <lsw-agenda-breadcrumb :agenda="this"
                     :path-items="[{label:'Buscar postimpresión'}]" />
             </div>
             <lsw-agenda-postimpresion-search />
         </div>
         <div v-else-if="selectedContext === 'infraccion.search'">
             <div class="breadcrumb_box">
-                <lsw-agenda-breadcrumb
-                    :agenda="this" 
+                <lsw-agenda-breadcrumb :agenda="this"
                     :path-items="[{label:'Buscar infracción'}]" />
             </div>
             <lsw-agenda-infraccion-search />
         </div>
         <div v-else-if="selectedContext === 'evento.search'">
             <div class="breadcrumb_box">
-                <lsw-agenda-breadcrumb
-                    :agenda="this" :path-items="[{label:'Buscar evento'}]" />
+                <lsw-agenda-breadcrumb :agenda="this"
+                    :path-items="[{label:'Buscar evento'}]" />
             </div>
             <lsw-agenda-evento-search />
         </div>
         <div v-else-if="selectedContext === 'propagador.search'">
             <div class="breadcrumb_box">
-                <lsw-agenda-breadcrumb
-                    :agenda="this" 
+                <lsw-agenda-breadcrumb :agenda="this"
                     :path-items="[{label:'Buscar propagador'}]" />
             </div>
             <lsw-agenda-propagador-search />
         </div>
     </div>
     <div v-if="selectedContext === 'agenda'">
-        <div class="breadcrumb_box" style="padding-left: 8px;">
-            <lsw-agenda-breadcrumb :agenda="this" :path-items="[{label:'Día ' + $lsw.timer.utils.formatDatestringFromDate(selectedDate, true),noop:true}]" />
+        <div class="breadcrumb_box"
+            style="padding-left: 8px; padding-right: 8px;">
+            <lsw-agenda-breadcrumb :agenda="this"
+                :path-items="[{label:'Día ' + $lsw.timer.utils.formatDatestringFromDate(selectedDate, true),noop:true}]" />
         </div>
         <div class="calendar_viewer">
             <lsw-calendario ref="calendario"
-                :solo-fecha="true"
-                :al-cambiar-valor="v => loadDateTasks(v)" />
+                modo="date"
+                :al-cambiar-valor="(v, cal) => loadDateTasks(v, cal)" />
         </div>
-        <div class="no_tasks_message"
-            v-if="isLoading">
-            Por favor, aguarde hasta recuperar los datos.
-        </div>
-        <div class="box_for_date_details"
-            v-else-if="(!isLoading) && selectedDateTasksFormattedPerHour && selectedDateTasksFormattedPerHour.length">
-            <div class="hour_table"
-                v-for="franja, franjaIndex in selectedDateTasksFormattedPerHour"
-                v-bind:key="'franja_horaria_' + franjaIndex">
-                <div class="hour_lapse_separator"
-                    v-on:click="() => toggleHour(franja.hora)">
-                    {{ $lsw.timer.utils.formatHourFromMomento(franja) }} · <span class="hour_compromises">{{
-                        $lsw.utils.pluralizar("compromiso", "compromisos", "%i %s", Object.keys(franja.tareas).length) }}</span>
-                </div>
-                <div class="hour_lapse_list"
-                    v-show="hiddenDateHours.indexOf(franja.hora) === -1">
-                    <template v-for="tarea, tareaIndex in franja.tareas">
-                        <div class="hour_task_block"
-                            :class="{is_completed: tarea.estado === 'done', is_failed: tarea.estado === 'failed', is_pending: tarea.estado === 'pending'}"
-                            v-bind:key="'franja_horaria_' + franjaIndex + '_tarea_' + tareaIndex">
-                            <div class="hour_task_pill pill">
-                                <span class="hour_task_dragger pill_start">
-                                    ≡</span><span class="hour_task_name pill_middle">
-                                    {{ tarea.refers_to_concept }}</span><span class="hour_task_details_start pill_middle">
-                                    {{ $lsw.timer.utils.formatHourFromMomentoCode(tarea.starts_at, false) }}</span><span
-                                    class="hour_task_details_duration pill_middle">
-                                    {{ tarea.has_duration }}</span><span class="hour_task_editer pill_middle"
-                                    v-on:click="() => openUpdateTaskDialog(tarea)">
-                                    ⚙</span><span class="hour_task_deleter pill_end"
-                                    v-on:click="() => openDeleteTaskDialog(tarea)">
-                                    ❌</span>
-                            </div>
-                        </div>
-                    </template>
+        <div class="tasks_viewer">
+            <div class="selected_day_title"
+                v-if="selectedDate">
+                <div class="flex_row centered">
+                    <div class="flex_1 margin_right_1"><button class="bright_border" v-on:click="() => selectHour('new')" :class="{activated: selectedForm === 'new'}">#️⃣</button></div>
+                    <div class="flex_100">{{ $lsw.timer.utils.formatDateToSpanish(selectedDate, true) }}</div>
+                    <div class="flex_1 nowrap" :style="(!isLoading) && Array.isArray(selectedDateTasksFormattedPerHour) && selectedDateTasksFormattedPerHour.length ? '' : 'visibility: hidden'">
+                        <button class="bright_border" v-on:click="togglePsicodelia" :class="{activated: hasPsicodelia}">❤️</button>
+                        <button class="bright_border" v-on:click="showAllHours">🔓*</button>
+                        <button class="bright_border" v-on:click="hideAllHours">🔒*</button>
+                    </div>
                 </div>
             </div>
+            <div v-if="selectedForm === 'new'">
+                <lsw-schema-based-form
+                    :on-submit="v => onInsertTask(v)"
+                    :on-delete-row="refreshTasks"
+                    :overriden-values="{
+                        tiene_inicio: $lsw.timer.utils.formatDatestringFromDate(selectedDate, 1)
+                        + ' '
+                        + $lsw.timer.utils.formatHour(0, 0)
+                    }"
+                    :model="{
+                        connection: $lsw.database,
+                        databaseId: 'lsw_default_database',
+                        rowId: -1,
+                        tableId: 'Accion',
+                    }" />
+            </div>
+            <div class="no_tasks_message"
+                v-if="isLoading">
+                Por favor, aguarde hasta recuperar los datos.
+            </div>
+            <div class="box_for_date_details"
+                v-else-if="(!isLoading) && Array.isArray(selectedDateTasksFormattedPerHour) && selectedDateTasksFormattedPerHour.length">
+                <div class="hour_table"
+                    v-for="franja, franjaIndex in selectedDateTasksFormattedPerHour"
+                    v-bind:key="'franja_horaria_' + franjaIndex">
+                    <div class="hour_lapse_separator">
+                        <div class="flex_row centered">
+                            <div class="flex_1 pad_right_1">
+                                <button class="bright_border nowrap"
+                                    style="margin-right: 1px;"
+                                    v-on:click="() => selectHour(franja.hora)"
+                                    :class="{activated: selectedForm === franja.hora}">#️⃣</button>
+                            </div>
+                            <div class="flex_100">
+                                <span>{{ $lsw.timer.utils.formatHourFromMomento(franja) }}</span>
+                                <span> · </span>
+                                <span class="hour_compromises">{{ $lsw.utils.pluralizar("compromiso", "compromisos", "%i %s", Object.keys(franja.tareas).length) }}</span>
+                            </div>
+                            <div class="flex_1">
+                                <div class="flex_1 flex_row centered">
+                                    <span v-on:click="() => toggleHour(franja.hora)">
+                                        <button class="bright_border nowrap activated"
+                                            v-if="hiddenDateHours.indexOf(franja.hora) === -1">🔓</button>
+                                        <button class="bright_border nowrap"
+                                            v-else>🔒</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <lsw-schema-based-form v-if="selectedForm === franja.hora"
+                        :on-submit="v => $lsw.database.insert('Accion', v).then(refreshTasks)"
+                        :on-delete-row="refreshTasks"
+                        :overriden-values="{
+                            tiene_inicio: $lsw.timer.utils.formatDatestringFromDate(selectedDate, 1)
+                            + ' '
+                            + $lsw.timer.utils.formatHour(franja.hora, franja.minuto || 0)
+                        }"
+                        :model="{
+                            connection: $lsw.database,
+                            databaseId: 'lsw_default_database',
+                            rowId: -1,
+                            tableId: 'Accion',
+                        }" />
+                    <div class="hour_lapse_list"
+                        v-show="hiddenDateHours.indexOf(franja.hora) === -1">
+                        <template v-for="tarea, tareaIndex in franja.tareas">
+                            <div class="hour_task_block"
+                                :class="{is_completed: tarea.tiene_estado === 'completada', is_failed: tarea.tiene_estado === 'fallida', is_pending: tarea.tiene_estado === 'pendiente'}"
+                                v-bind:key="'franja_horaria_' + franjaIndex + '_tarea_' + tareaIndex">
+                                <div class="hour_task_pill pill">
+                                    <div class="flex_1 hour_task_dragger pill_start"
+                                        style="padding-top: 4px;">
+                                        <div class=""
+                                            style="min-width: 20px;padding-left: 3px;padding-top: 2px;">❗️</div>
+                                    </div>
+                                    <div class="flex_1 hour_task_details_start pill_middle">
+                                        <div class="lighted_cell" :class="{psicodelic_cell: hasPsicodelia}">{{ $lsw.timer.utils.formatHourFromMomentoCode(tarea.tiene_inicio, true) ?? '💩' }}
+                                        </div>
+                                    </div>
+                                    <div class="flex_1 hour_task_details_duration pill_middle">
+                                        <div class="lighted_cell">{{ tarea.tiene_duracion || '🤔' }}</div>
+                                    </div>
+                                    <div class="flex_100 hour_task_name pill_middle" style="overflow: hidden;">
+                                        <div class="lighted_cell" style="text-overflow: ellipsis; overflow: clip; max-width: 100%;">{{ tarea.en_concepto || '🤔' }}</div>
+                                    </div>
+                                    <div class="flex_1 hour_task_editer pill_middle button_pill_cell">
+                                        <button v-on:click="() => openUpdateTaskDialog(tarea)"
+                                            :class="{activated: selectedForm === tarea.id}">#️⃣</button>
+                                    </div>
+                                    <div class="flex_1 hour_task_editer pill_end button_pill_cell">
+                                        <button class="danger_button" v-on:click="(e) => openDeleteTaskDialog(tarea, e)">❌</button>
+                                    </div>
+                                </div>
+                                <lsw-schema-based-form v-if="selectedForm === tarea.id"
+                                    :on-submit="v => onUpdateTask(v, tarea)"
+                                    :on-delete-row="refreshTasks"
+                                    :overriden-values="{
+                                        tiene_inicio: $lsw.timer.utils.formatDatestringFromDate(selectedDate, 1)
+                                        + ' '
+                                        + $lsw.timer.utils.formatHour(franja.hora, franja.minuto || 0)
+                                    }"
+                                    :model="{
+                                        connection: $lsw.database,
+                                        databaseId: 'lsw_default_database',
+                                        rowId: tarea.id,
+                                        tableId: 'Accion',
+                                    }" />
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <div class="no_tasks_message"
+                v-else>
+                No hay tareas asignadas para este día.
+            </div>
         </div>
-        <div class="no_tasks_message"
-            v-else>
-            No hay tareas asignadas para este día.
-        </div>
+    </div>
+    <div>
     </div>
 </div>

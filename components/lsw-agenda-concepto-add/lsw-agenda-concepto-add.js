@@ -28,21 +28,21 @@ Vue.component("LswAgendaConceptoAdd", {
         fields: [{
           type: "input",
           enunciate: "Consequencias:",
-          code1: "it.has_consequences",
-          code2: "has_consequences",
+          code1: "it.tiene_consecuencias",
+          code2: "tiene_consecuencias",
           code3: "string",
           explanation: "blablabla.",
           placeholder: "blabla",
           errorConfig: {
-            parentId: "has_consequences",
+            parentId: "tiene_consecuencias",
             parentScope: outterFormScope,
           },
           inputConfig: {
             parentId: "formularioInicial",
             parentScope: outterFormScope,
-            selfId: "has_consequences",
+            selfId: "tiene_consecuencias",
             selfScope: outterFormScope,
-            name: "has_consequences"
+            name: "tiene_consecuencias"
           }
         }]
       }

@@ -4,20 +4,20 @@ Vue.component("LswAgendaAccionAdd", {
   data() {
     this.$trace("lsw-agenda-accion-add.data");
     return {
-      refers_to_concept: "",
-      has_duration: "",
-      starts_at: "",
-      has_emotions: "",
-      has_details: "",
-      has_description: "",
-      has_steps: "",
-      has_reasoning: "",
-      has_expectations: "",
+      en_concepto_de: "",
+      tiene_duracion: "",
+      tiene_inicio: "",
+      tiene_emociones: "",
+      tiene_detalles: "",
+      tiene_descripcion: "",
+      tiene_pasos: "",
+      tiene_razonamiento: "",
+      tiene_expectativas: "",
       has_learning: "",
-      has_intention: "",
-      has_result: "",
-      has_history: "",
-      has_consequences: "",
+      tiene_intenciones: "",
+      tiene_resultados: "",
+      tiene_historial: "",
+      tiene_consecuencias: "",
       // Campos para el formulario:
       formScope: Object.freeze({}), // El scope que usará el formulario que queremos.
       formMetadata: false, // Los metadatos, que incluyen fields y form.
@@ -29,32 +29,32 @@ Vue.component("LswAgendaAccionAdd", {
       const fields = [{
         type: "input",
         enunciate: "Concepto al que se refiere:",
-        code1: "it.refers_to_concept",
-        code2: "refers_to_concept",
+        code1: "it.en_concepto_de",
+        code2: "en_concepto_de",
         code3: "string",
-        explanation: "tiene que coincidir con el «has_name» del concepto para que funcionen los propagadores correspondientes.",
+        explanation: "tiene que coincidir con el «tiene_nombre» del concepto para que funcionen los propagadores correspondientes.",
         placeholder: "Ej: Desayunar",
         errorConfig: {
-          parentId: "refers_to_concept",
+          parentId: "en_concepto_de",
           parentScope: outterFormScope,
         },
         inputConfig: {
           parentId: "formularioInicial",
           parentScope: outterFormScope,
-          selfId: "refers_to_concept",
+          selfId: "en_concepto_de",
           selfScope: outterFormScope,
-          name: "refers_to_concept"
+          name: "en_concepto_de"
         }
       }, {
         type: "input",
         enunciate: "Duración:",
-        code1: "it.has_duration",
-        code2: "has_duration",
+        code1: "it.tiene_duracion",
+        code2: "tiene_duracion",
         code3: "string",
         explanation: "tiene que cumplir con el formato «0y 0mon 0d 0h 0min 0s» para referir a una duración.",
         placeholder: "Ej: 0y 0mon 0d 0h 0min",
         errorConfig: {
-          parentId: "has_duration",
+          parentId: "tiene_duracion",
           parentScope: outterFormScope,
           onSuccessStatus: {
             name: "OK",
@@ -64,9 +64,9 @@ Vue.component("LswAgendaAccionAdd", {
         inputConfig: {
           parentId: "formularioInicial",
           parentScope: outterFormScope,
-          selfId: "has_duration",
+          selfId: "tiene_duracion",
           selfScope: outterFormScope,
-          name: "has_duration",
+          name: "tiene_duracion",
           onValidate: function(value) {
             const result = Timeformat_parser.parse(value);
             if(result.length !== 1) {
@@ -80,13 +80,13 @@ Vue.component("LswAgendaAccionAdd", {
       }, {
         type: "input",
         enunciate: "Inicio:",
-        code1: "it.starts_at",
-        code2: "starts_at",
+        code1: "it.tiene_inicio",
+        code2: "tiene_inicio",
         code3: "string",
         explanation: "tiene que cumplir con el formato «2025/01/01 23:59» para ser válido.",
         placeholder: "2025/01/01 00:00",
         errorConfig: {
-          parentId: "starts_at",
+          parentId: "tiene_inicio",
           parentScope: outterFormScope,
           onSuccessStatus: {
             name: "OK",
@@ -96,9 +96,9 @@ Vue.component("LswAgendaAccionAdd", {
         inputConfig: {
           parentId: "formularioInicial",
           parentScope: outterFormScope,
-          selfId: "starts_at",
+          selfId: "tiene_inicio",
           selfScope: outterFormScope,
-          name: "starts_at",
+          name: "tiene_inicio",
           onValidate: function(value) {
             const result = Timeformat_parser.parse(value);
             if(result.length !== 1) {
@@ -140,116 +140,116 @@ Vue.component("LswAgendaAccionAdd", {
       }, {
         type: "input",
         enunciate: "Emociones asociadas:",
-        code1: "it.has_emotions",
-        code2: "has_emotions",
+        code1: "it.tiene_emociones",
+        code2: "tiene_emociones",
         code3: "string",
         explanation: "blablabla.",
         placeholder: "blabla",
         errorConfig: {
-          parentId: "has_emotions",
+          parentId: "tiene_emociones",
           parentScope: outterFormScope,
         },
         inputConfig: {
           parentId: "formularioInicial",
           parentScope: outterFormScope,
-          selfId: "has_emotions",
+          selfId: "tiene_emociones",
           selfScope: outterFormScope,
-          name: "has_emotions"
+          name: "tiene_emociones"
         }
       }, {
         type: "input",
         enunciate: "Detalles:",
-        code1: "it.has_details",
-        code2: "has_details",
+        code1: "it.tiene_detalles",
+        code2: "tiene_detalles",
         code3: "string",
         explanation: "blablabla.",
         placeholder: "blabla",
         errorConfig: {
-          parentId: "has_details",
+          parentId: "tiene_detalles",
           parentScope: outterFormScope,
         },
         inputConfig: {
           parentId: "formularioInicial",
           parentScope: outterFormScope,
-          selfId: "has_details",
+          selfId: "tiene_detalles",
           selfScope: outterFormScope,
-          name: "has_details"
+          name: "tiene_detalles"
         }
       }, {
         type: "input",
         enunciate: "Descripción:",
-        code1: "it.has_description",
-        code2: "has_description",
+        code1: "it.tiene_descripcion",
+        code2: "tiene_descripcion",
         code3: "string",
         explanation: "blablabla.",
         placeholder: "blabla",
         errorConfig: {
-          parentId: "has_description",
+          parentId: "tiene_descripcion",
           parentScope: outterFormScope,
         },
         inputConfig: {
           parentId: "formularioInicial",
           parentScope: outterFormScope,
-          selfId: "has_description",
+          selfId: "tiene_descripcion",
           selfScope: outterFormScope,
-          name: "has_description"
+          name: "tiene_descripcion"
         }
       }, {
         type: "input",
         enunciate: "Pasos:",
-        code1: "it.has_steps",
-        code2: "has_steps",
+        code1: "it.tiene_pasos",
+        code2: "tiene_pasos",
         code3: "string",
         explanation: "blablabla.",
         placeholder: "blabla",
         errorConfig: {
-          parentId: "has_steps",
+          parentId: "tiene_pasos",
           parentScope: outterFormScope,
         },
         inputConfig: {
           parentId: "formularioInicial",
           parentScope: outterFormScope,
-          selfId: "has_steps",
+          selfId: "tiene_pasos",
           selfScope: outterFormScope,
-          name: "has_steps"
+          name: "tiene_pasos"
         }
       }, {
         type: "input",
         enunciate: "Razonamiento:",
-        code1: "it.has_reasoning",
-        code2: "has_reasoning",
+        code1: "it.tiene_razonamiento",
+        code2: "tiene_razonamiento",
         code3: "string",
         explanation: "blablabla.",
         placeholder: "blabla",
         errorConfig: {
-          parentId: "has_reasoning",
+          parentId: "tiene_razonamiento",
           parentScope: outterFormScope,
         },
         inputConfig: {
           parentId: "formularioInicial",
           parentScope: outterFormScope,
-          selfId: "has_reasoning",
+          selfId: "tiene_razonamiento",
           selfScope: outterFormScope,
-          name: "has_reasoning"
+          name: "tiene_razonamiento"
         }
       }, {
         type: "input",
         enunciate: "Expectativas:",
-        code1: "it.has_expectations",
-        code2: "has_expectations",
+        code1: "it.tiene_expectativas",
+        code2: "tiene_expectativas",
         code3: "string",
         explanation: "blablabla.",
         placeholder: "blabla",
         errorConfig: {
-          parentId: "has_expectations",
+          parentId: "tiene_expectativas",
           parentScope: outterFormScope,
         },
         inputConfig: {
           parentId: "formularioInicial",
           parentScope: outterFormScope,
-          selfId: "has_expectations",
+          selfId: "tiene_expectativas",
           selfScope: outterFormScope,
-          name: "has_expectations"
+          name: "tiene_expectativas"
         }
       }, {
         type: "input",
@@ -273,78 +273,78 @@ Vue.component("LswAgendaAccionAdd", {
       }, {
         type: "input",
         enunciate: "Intención:",
-        code1: "it.has_intention",
-        code2: "has_intention",
+        code1: "it.tiene_intenciones",
+        code2: "tiene_intenciones",
         code3: "string",
         explanation: "blablabla.",
         placeholder: "blabla",
         errorConfig: {
-          parentId: "has_intention",
+          parentId: "tiene_intenciones",
           parentScope: outterFormScope,
         },
         inputConfig: {
           parentId: "formularioInicial",
           parentScope: outterFormScope,
-          selfId: "has_intention",
+          selfId: "tiene_intenciones",
           selfScope: outterFormScope,
-          name: "has_intention"
+          name: "tiene_intenciones"
         }
       }, {
         type: "input",
         enunciate: "Resultado:",
-        code1: "it.has_result",
-        code2: "has_result",
+        code1: "it.tiene_resultados",
+        code2: "tiene_resultados",
         code3: "string",
         explanation: "blablabla.",
         placeholder: "blabla",
         errorConfig: {
-          parentId: "has_result",
+          parentId: "tiene_resultados",
           parentScope: outterFormScope,
         },
         inputConfig: {
           parentId: "formularioInicial",
           parentScope: outterFormScope,
-          selfId: "has_result",
+          selfId: "tiene_resultados",
           selfScope: outterFormScope,
-          name: "has_result"
+          name: "tiene_resultados"
         }
       }, {
         type: "input",
         enunciate: "Historia:",
-        code1: "it.has_history",
-        code2: "has_history",
+        code1: "it.tiene_historial",
+        code2: "tiene_historial",
         code3: "string",
         explanation: "blablabla.",
         placeholder: "blabla",
         errorConfig: {
-          parentId: "has_history",
+          parentId: "tiene_historial",
           parentScope: outterFormScope,
         },
         inputConfig: {
           parentId: "formularioInicial",
           parentScope: outterFormScope,
-          selfId: "has_history",
+          selfId: "tiene_historial",
           selfScope: outterFormScope,
-          name: "has_history"
+          name: "tiene_historial"
         }
       }, {
         type: "input",
         enunciate: "Consequencias:",
-        code1: "it.has_consequences",
-        code2: "has_consequences",
+        code1: "it.tiene_consecuencias",
+        code2: "tiene_consecuencias",
         code3: "string",
         explanation: "blablabla.",
         placeholder: "blabla",
         errorConfig: {
-          parentId: "has_consequences",
+          parentId: "tiene_consecuencias",
           parentScope: outterFormScope,
         },
         inputConfig: {
           parentId: "formularioInicial",
           parentScope: outterFormScope,
-          selfId: "has_consequences",
+          selfId: "tiene_consecuencias",
           selfScope: outterFormScope,
-          name: "has_consequences"
+          name: "tiene_consecuencias"
         }
       }, ];
       this.formMetadata = Object.freeze({
