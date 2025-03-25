@@ -57,13 +57,17 @@ Vue.component("LswAgenda", {
         this.selectedDate = newDate;
         const selectedDate = this.selectedDate;
         const selectedDateTasks = await this.$lsw.database.selectMany("Accion", valueBrute => {
-          const valueList = Timeformat_parser.parse(valueBrute.tiene_inicio);
-          const value = valueList[0];
-          const isSameYear = value.anio === selectedDate.getFullYear();
-          const isSameMonth = value.mes === (selectedDate.getMonth() + 1);
-          const isSameDay = value.dia === selectedDate.getDate();
-          const isAccepted = isSameYear && isSameMonth && isSameDay;
-          return isAccepted;
+          try {
+            const valueList = Timeformat_parser.parse(valueBrute.tiene_inicio);
+            const value = valueList[0];
+            const isSameYear = value.anio === selectedDate.getFullYear();
+            const isSameMonth = value.mes === (selectedDate.getMonth() + 1);
+            const isSameDay = value.dia === selectedDate.getDate();
+            const isAccepted = isSameYear && isSameMonth && isSameDay;
+            return isAccepted;
+          } catch (error) {
+            return true;
+          }
         });
         this.selectedDateTasks = selectedDateTasks;
         this.propagateDateTasks();
@@ -92,7 +96,7 @@ Vue.component("LswAgenda", {
           out[day].push(item);
           return out;
         }, {});
-        // calendario.establecer_marcadores_del_mes(tasksOfMonthByDay);
+        calendario.establecer_marcadores_del_mes(tasksOfMonthByDay);
       }
     },
     groupTasksByHour(tareas = this.selectedDateTasks) {

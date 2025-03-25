@@ -1,5 +1,12 @@
 <div class="LswAgendaAccionAdd" style="padding-top: 4px;">
-  <template v-if="formMetadata">
-    <lsw-agenda-form :form-metadata="formMetadata"></lsw-agenda-form>
+  <template>
+    <lsw-schema-based-form
+      :on-submit="insertAccion"
+      :model="{
+        databaseId: 'lsw_default_database',
+        tableId: 'Accion',
+        rowId: -1,
+      }"
+    />
   </template>
 </div>

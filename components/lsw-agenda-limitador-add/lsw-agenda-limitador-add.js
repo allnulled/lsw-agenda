@@ -3,9 +3,17 @@ Vue.component("LswAgendaLimitadorAdd", {
   props: {},
   data() {
     this.$trace("lsw-agenda-limitador-add.data");
-    return {};
+    return {
+      // 
+    };
   },
-  methods: {},
+  methods: {
+    async insertLimitador(v) {
+      this.$trace("lsw-agenda-limitador-add.methods.insertLimitador");
+      await this.$lsw.database.insert("Limitador", v);
+      // @TODO: should redirect
+    }
+  },
   watch: {},
   mounted() {
     try {
