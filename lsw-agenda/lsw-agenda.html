@@ -212,6 +212,9 @@
                 modo="date"
                 :al-cambiar-valor="(v, cal) => loadDateTasks(v, cal)" />
         </div>
+        <div class="limitador_viewer">
+            <lsw-agenda-limitador-viewer :agenda="this" />
+        </div>
         <div class="tasks_viewer">
             <div class="selected_day_title"
                 v-if="selectedDate">
@@ -308,7 +311,7 @@
                                     <div class="flex_1 hour_task_details_duration pill_middle">
                                         <div class="lighted_cell">{{ tarea.tiene_duracion || '🤔' }}</div>
                                     </div>
-                                    <div class="flex_100 hour_task_name pill_middle" style="overflow: hidden;">
+                                    <div class="flex_100 hour_task_name pill_middle" style="overflow: hidden;" v-on:click="() => advanceTaskState(tarea)">
                                         <div class="lighted_cell" style="text-overflow: ellipsis; overflow: clip; max-width: 100%;">{{ tarea.en_concepto || '🤔' }}</div>
                                     </div>
                                     <div class="flex_1 hour_task_editer pill_middle button_pill_cell">
@@ -343,7 +346,5 @@
                 No hay tareas asignadas para este día.
             </div>
         </div>
-    </div>
-    <div>
     </div>
 </div>

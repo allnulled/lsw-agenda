@@ -1,0 +1,16 @@
+.lsw_agenda_limitador_viewer {
+    
+}
+.infracciones_list {
+    padding-top: 8px;
+}
+.infraccion_item {
+    padding: 8px;
+    padding-top: 0px;
+}
+.infraccion_item > .infraccion_text {
+    background-color: rgba(115, 13, 13, 0.849);
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0 2px black;
+    padding: 8px;
+}

@@ -1,0 +1,11 @@
+<div class="LswAgendaLimitadorViewer">
+    <div v-if="isLoaded">
+      <div class="infracciones_list" v-if="infracciones.length">
+        <template v-for="infraccion, infraccionIndex in infracciones">
+          <div class="infraccion_item" v-bind:key="'infraccion_' + infraccionIndex">
+            <div class="infraccion_text">⚠️ <b style="text-decoration: underline;">Infracción {{ infraccionIndex + 1 }}.</b> {{ infraccion.message }}</div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>

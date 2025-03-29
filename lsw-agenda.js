@@ -231,6 +231,9 @@ Vue.component("LswAgenda", {
                 modo="date"
                 :al-cambiar-valor="(v, cal) => loadDateTasks(v, cal)" />
         </div>
+        <div class="limitador_viewer">
+            <lsw-agenda-limitador-viewer :agenda="this" />
+        </div>
         <div class="tasks_viewer">
             <div class="selected_day_title"
                 v-if="selectedDate">
@@ -327,7 +330,7 @@ Vue.component("LswAgenda", {
                                     <div class="flex_1 hour_task_details_duration pill_middle">
                                         <div class="lighted_cell">{{ tarea.tiene_duracion || '🤔' }}</div>
                                     </div>
-                                    <div class="flex_100 hour_task_name pill_middle" style="overflow: hidden;">
+                                    <div class="flex_100 hour_task_name pill_middle" style="overflow: hidden;" v-on:click="() => advanceTaskState(tarea)">
                                         <div class="lighted_cell" style="text-overflow: ellipsis; overflow: clip; max-width: 100%;">{{ tarea.en_concepto || '🤔' }}</div>
                                     </div>
                                     <div class="flex_1 hour_task_editer pill_middle button_pill_cell">
@@ -362,8 +365,6 @@ Vue.component("LswAgenda", {
                 No hay tareas asignadas para este día.
             </div>
         </div>
-    </div>
-    <div>
     </div>
 </div>`,
   props: {},
@@ -549,6 +550,21 @@ Vue.component("LswAgenda", {
       this.$trace("lsw-agenda.methods.onInsertTask");
       const id = await this.$lsw.database.insert('Accion', v);
       this.selectedForm = id;
+      this.refreshTasks();
+    },
+    async advanceTaskState(tarea) {
+      this.$trace("lsw-agenda.methods.onInsertTask");
+      const siguienteEstado = (() => {
+        switch(tarea.tiene_estado) {
+          case "pendiente": return "completada";
+          case "completada": return "fallida";
+          case "fallida": return "pendiente";
+          default: return "pendiente";
+        }
+      })();
+      await this.$lsw.database.overwrite('Accion', tarea.id, {
+        tiene_estado: siguienteEstado
+      });
       this.refreshTasks();
     }
   },
@@ -932,18 +948,90 @@ Vue.component("LswAgendaLimitadorAdd", {
 });
 Vue.component("LswAgendaLimitadorSearch", {
   template: `<div class="LswAgendaLimitadorSearch">
-  LswAgendaLimitadorSearch
+  <lsw-table v-if="isLoaded"
+    :initial-input="rows"></lsw-table>
 </div>`,
   props: {},
   data() {
     this.$trace("lsw-agenda-limitador-search.data");
-    return {};
+    return {
+      isLoaded: false,
+    };
   },
-  methods: {},
+  methods: {
+    async loadRows() {
+      this.$trace("lsw-agenda-limitador-search.methods.loadRows");
+      this.rows = await this.$lsw.database.selectMany("Limitador", it => true);
+      this.isLoaded = true;
+    }
+  },
   watch: {},
   mounted() {
     try {
       this.$trace("lsw-agenda-limitador-search.mounted");
+      this.loadRows();
+    } catch(error) {
+      console.log(error);
+    }
+  }
+});
+Vue.component("LswAgendaLimitadorViewer", {
+  template: `<div class="LswAgendaLimitadorViewer">
+    <div v-if="isLoaded">
+      <div class="infracciones_list" v-if="infracciones.length">
+        <template v-for="infraccion, infraccionIndex in infracciones">
+          <div class="infraccion_item" v-bind:key="'infraccion_' + infraccionIndex">
+            <div class="infraccion_text">⚠️ <b style="text-decoration: underline;">Infracción {{ infraccionIndex + 1 }}.</b> {{ infraccion.message }}</div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </div>`,
+  props: {},
+  data() {
+    this.$trace("lsw-agenda-limitador-viewer.data");
+    return {
+      isLoaded: false,
+      limitadores: undefined,
+      infracciones: [],
+    };
+  },
+  methods: {
+    fixAsyncCode(asyncCode) {
+      if(asyncCode.trim().startsWith("async ")) {
+        return `return await (${asyncCode}).call(this)`
+      }
+      return asyncCode;
+    },
+    async executeLimitadores() {
+      const lims = this.limitadores;
+      for(let index=0; index<lims.length; index++) {
+        const limitador = lims[index];
+        const asyncCode = limitador.tiene_funcion;
+        const AsyncFunc = (async function() {}).constructor;
+        const fixedAsyncCode = this.fixAsyncCode(asyncCode);
+        const asyncFunc = new AsyncFunc(fixedAsyncCode);
+        console.log(asyncFunc);
+        try {
+          await asyncFunc.call(this);
+        } catch (error) {
+          this.infracciones.push(error);
+        }
+      }
+    },
+    async loadLimitadores() {
+      this.$trace("lsw-agenda-limitador-viewer.methods.loadLimitadores");
+      const limitadores = await this.$lsw.database.selectMany("Limitador");
+      this.limitadores = limitadores;
+      await this.executeLimitadores();
+    }
+  },
+  watch: {},
+  async mounted() {
+    try {
+      this.$trace("lsw-agenda-limitador-viewer.mounted");
+      await this.loadLimitadores();
+      this.isLoaded = true;
     } catch(error) {
       console.log(error);
     }

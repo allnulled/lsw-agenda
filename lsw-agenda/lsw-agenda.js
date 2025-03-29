@@ -185,6 +185,21 @@ Vue.component("LswAgenda", {
       const id = await this.$lsw.database.insert('Accion', v);
       this.selectedForm = id;
       this.refreshTasks();
+    },
+    async advanceTaskState(tarea) {
+      this.$trace("lsw-agenda.methods.onInsertTask");
+      const siguienteEstado = (() => {
+        switch(tarea.tiene_estado) {
+          case "pendiente": return "completada";
+          case "completada": return "fallida";
+          case "fallida": return "pendiente";
+          default: return "pendiente";
+        }
+      })();
+      await this.$lsw.database.overwrite('Accion', tarea.id, {
+        tiene_estado: siguienteEstado
+      });
+      this.refreshTasks();
     }
   },
   watch: {

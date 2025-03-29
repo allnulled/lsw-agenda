@@ -14,6 +14,7 @@ module.exports = [
   `${__dirname}/components/lsw-agenda-infraccion-search/lsw-agenda-infraccion-search`,
   `${__dirname}/components/lsw-agenda-limitador-add/lsw-agenda-limitador-add`,
   `${__dirname}/components/lsw-agenda-limitador-search/lsw-agenda-limitador-search`,
+  `${__dirname}/components/lsw-agenda-limitador-viewer/lsw-agenda-limitador-viewer`,
   `${__dirname}/components/lsw-agenda-postimpresion-search/lsw-agenda-postimpresion-search`,
   `${__dirname}/components/lsw-agenda-propagacion-search/lsw-agenda-propagacion-search`,
   `${__dirname}/components/lsw-agenda-propagador-search/lsw-agenda-propagador-search`,
